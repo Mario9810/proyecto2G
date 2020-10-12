@@ -4,7 +4,7 @@ import random
 from numpy import cos, sin, tan
 import ops as op
 from obj import Obj
-from collections import namedtuple
+
 
 
 OPAQUE = 0
@@ -265,7 +265,7 @@ class Raytracer(object):
                 Py *= t
 
                 #Nuestra camara siempre esta viendo hacia -Z
-                direction = (Px, Py, -1)
+                direction = [Px, Py, -1]
                 direction = op.divide(direction , op.norm(direction))
 
                 self.glVertex_coord(x, y, self.castRay(self.camPosition, direction))
@@ -361,7 +361,7 @@ class Raytracer(object):
 
             # Sacamos la direccion de la luz para este punto
             light_dir = op.subtract(pointLight.position, intersect.point)
-            light_dir = op.divide(light_dir / op.norm(light_dir))
+            light_dir = op.divide(light_dir , op.norm(light_dir))
 
             # Calculamos el valor del diffuse color
             intensity = pointLight.intensity * max(0, op.dot(light_dir, intersect.normal))

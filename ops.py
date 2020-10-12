@@ -22,6 +22,17 @@ def subtract(a,b):
     for i in range(size):
         s.append(a[i]-b[i])
     return s
+def subtract2(arr1,arr2):
+    try:
+        if (isinstance(arr1, int) or isinstance(arr1, float)) and (
+                isinstance(arr2, int) or isinstance(arr2, float)):
+            return arr1 - arr2
+        elif isinstance(arr1, list) and isinstance(arr2, list) and len(arr1) == len(arr2):
+            return [subtract2(arr1[x], arr2[x]) for x in range(len(arr1))]
+        else:
+            raise Exception
+    except:
+        print('No es posible realizar la resta con los datos ingresados')
 
 def norm(a):
     magnitude = 0
@@ -30,6 +41,8 @@ def norm(a):
     magnitude = magnitude ** 0.5
     return magnitude
 
+def norm2(a):
+    return sum(list(map(lambda x: abs(x) ** 2, a))) ** 0.5
 def divide(a,b):
     size = len(a)
     s = []
@@ -64,9 +77,11 @@ def det(a):
         return sum(mow)
 
 def mtxmul(a,b):
-    
     if type(a) != list:
         return [a * b[i] for i in range(len(b))]
+
+    if type(a) == list and type(b) == list:
+        return [a[x] * b[x] for x in range(len(a))]
 
     matrix = [[0 for x in range(4)] for j in range(len(a))]
     
@@ -77,8 +92,12 @@ def mtxmul(a,b):
         for y in range(len(b[0])):
             for z in range(len(b)):
                 matrix[x][y] += a[x][z] * b[z][y]
-    return matrix
+
 def add(arr1,arr2):
+    #print("arr1:")
+    #print(type(arr1))
+    #print("arr2:")
+    #print(type(arr2))
     try:
         if (isinstance(arr1, int) or isinstance(arr1, float)) and (
                 isinstance(arr2, int) or isinstance(arr2, float)):

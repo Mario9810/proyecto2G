@@ -1,9 +1,9 @@
 # Carga un archivo OBJ
 
 import struct
-import numpy as np
+import ops as op
 from numpy import arccos, arctan2 
-
+PI = 3.14159265
 def color(r, g, b):
     return bytes([int(b * 255), int(g * 255), int(r * 255)])
 
@@ -101,10 +101,10 @@ class Envmap(object):
 
     def getColor(self, direction):
 
-        direction = direction / np.linalg.norm(direction)
+        direction = op.divide(direction , op.norm(direction))
 
-        x = int( (arctan2( direction[2], direction[0]) / (2 * np.pi) + 0.5) * self.width)
-        y = int( arccos(-direction[1]) / np.pi * self.height )
+        x = int( (arctan2( direction[2], direction[0]) / (2 * PI) + 0.5) * self.width)
+        y = int( arccos(-direction[1]) / PI * self.height )
 
         return self.pixels[y][x]
 

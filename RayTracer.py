@@ -16,8 +16,8 @@ earthMat = Material(texture = Texture('energy.bmp'))
 wall =Material(texture = Texture('mbrick.bmp'))
 
 #size
-width = 112
-height = 112
+width = 580
+height = 580
 r = Raytracer(width,height)
 r.glClearColor(0.2, 0.6, 0.8)
 r.glClear()

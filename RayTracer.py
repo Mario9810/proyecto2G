@@ -31,12 +31,13 @@ r.scene.append(Sphere([-1.01, 0.047, -4.552], 0.4, earthMat))
 r.scene.append(Sphere([1.01, 0.047, -4.552], 0.4, lava))
 r.scene.append(Sphere([0.01, 1.01, -5.552], 0.4, glass))
 r.scene.append(Sphere([0.01, 0.01, -3.552], 0.4, glass))
+r.scene.append(Sphere([0.01, -1.01, -3.552], 0.4, mirror))
 
 # Lights
 print("trabajando en luces")
-r.dirLight = DirectionalLight(direction = (1, -1, -2), intensity = 0.5)
-r.pointLights.append(PointLight(intensity=0.1, position=(0, 2.5, 0)))
-r.ambientLight = AmbientLight(strength = 0.1)
+r.dirLight = DirectionalLight(direction = (1, -1, -2), intensity = 0.5) #directional light
+r.pointLights.append(PointLight(intensity=0.1, position=(0, 2.5, 0))) #spotlight
+r.ambientLight = AmbientLight(strength = 0.1) #ambientlight
 
 # Objects
 print("trabajando en cajas")

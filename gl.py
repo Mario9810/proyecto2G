@@ -415,7 +415,7 @@ class Raytracer(object):
         elif material.matType == TRANSPARENT:
 
             outside = op.dot(direction, intersect.normal) < 0
-            bias = 0.001 * intersect.normal
+            bias =op.mtxmul(00.001 , intersect.normal)
             kr = fresnel(intersect.normal, direction, material.ior)
 
             reflect = reflectVector(intersect.normal, op.mtxmul(-1,direction))

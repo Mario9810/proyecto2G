@@ -102,7 +102,7 @@ def add(arr1,arr2):
         if (isinstance(arr1, int) or isinstance(arr1, float)) and (
                 isinstance(arr2, int) or isinstance(arr2, float)):
             return arr1 + arr2
-        elif isinstance(arr1, list) and isinstance(arr2, list) and len(arr1) == len(arr2):
+        elif (isinstance(arr1, tuple) or isinstance(arr1,list)) and (isinstance(arr2, tuple) or isinstance(arr2,list)) and len(arr1) == len(arr2):
             return [add(arr1[x], arr2[x]) for x in range(len(arr1))]
         else:
             raise Exception

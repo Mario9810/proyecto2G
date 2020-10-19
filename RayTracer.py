@@ -15,33 +15,37 @@ lava = Material(texture = Texture('lava.bmp'))
 earthMat = Material(texture = Texture('energy.bmp'))
 wall =Material(texture = Texture('mbrick.bmp'))
 
-width = 512
-height = 512
+#size
+width = 112
+height = 112
 r = Raytracer(width,height)
 r.glClearColor(0.2, 0.6, 0.8)
 r.glClear()
 
+#env map
 r.envmap = Envmap('animenv.bmp')
-r.scene.append(Sphere([-1.01, 0.047, -4.552], 0.5, earthMat))
-r.scene.append(Sphere([1.01, 0.047, -4.552], 0.5, lava))
-# Lights
-#r.pointLights.append( PointLight(position = V3(-4,4,0), intensity = 0.5))
 
+#spheres
+print("trabajando en esferas")
+r.scene.append(Sphere([-1.01, 0.047, -4.552], 0.4, earthMat))
+r.scene.append(Sphere([1.01, 0.047, -4.552], 0.4, lava))
+r.scene.append(Sphere([0.01, 1.01, -5.552], 0.4, glass))
+r.scene.append(Sphere([0.01, 0.01, -3.552], 0.4, glass))
+
+# Lights
+print("trabajando en luces")
 r.dirLight = DirectionalLight(direction = (1, -1, -2), intensity = 0.5)
+r.pointLights.append(PointLight(intensity=0.1, position=(0, 2.5, 0)))
 r.ambientLight = AmbientLight(strength = 0.1)
 
 # Objects
-#r.scene.append( Sphere(V3( 0, 0, -8), 2, brick) )
-
-
-r.scene.append( AABB([0.01, -1.59, -6.04], [6, 0.2, 6] , boxMat ) )
-r.scene.append( AABB([3.38, 1.01, -6.12], [0.1, 6.86, 6.86] , wall ) )
-r.scene.append( AABB([-3.38, 1.01, -6.12], [0.1, 6.86, 6.86] , wall ) )
-r.scene.append( AABB([0, 3.55, -6.03], [7.2, 0.1, 7.2], mirror))
-#r.scene.append( AABB([-5, -3, -10], [3, 0.2, 3] , mirror ) )
-
-#r.scene.append( AABB(V3(1.5, 1.5, -5), V3(1, 1, 1) , boxMat ) )
-#r.scene.append( Sphere([ 0, 0, -8], 2, earthMat))
+print("trabajando en cajas")
+r.scene.append( AABB((0.01, -1.59, -6.04), [6, 0.2, 6] , boxMat ) )
+r.scene.append( AABB((3.38, 1.01, -6.12), [0.1, 6.86, 6.86] , wall ) )
+r.scene.append( AABB((-3.38, 1.01, -6.12), [0.1, 6.86, 6.86] , wall ) )
+r.scene.append( AABB((0.35, 0.01, -6.00), [0.3, 0.3, 0.3], stone))
+r.scene.append( AABB((-0.35, 0.01, -6.00), [0.3, 0.3, 0.3], brick))
+r.scene.append( AABB([0.01, 3.6, -5.98], [6.86, 0.2, 6.86] , mirror ) )
 
 
 

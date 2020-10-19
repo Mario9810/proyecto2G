@@ -5,7 +5,7 @@ from numpy import arccos, arctan2
 OPAQUE = 0
 REFLECTIVE = 1
 TRANSPARENT = 2
-
+PI = 3.14159265
 WHITE = color(1,1,1)
 
 class AmbientLight(object):
@@ -43,7 +43,7 @@ class Intersect(object):
         self.texCoords = texCoords
 
         self.sceneObject = sceneObject
-import numpy as gp
+#import numpy as gp
 class Sphere(object):
     def __init__(self, center, radius, material):
         self.center = center
@@ -69,12 +69,12 @@ class Sphere(object):
             return None
 
         # P = O + tD
-        hit = gp.add(orig, t0 * gp.array(dir))
-        norm = gp.subtract( hit, self.center )
-        norm = norm / gp.linalg.norm(norm)
+        hit = op.add(orig, op.mtxmul(t0,  dir))
+        norm = op.subtract( hit, self.center )
+        norm = op.divide(norm , op.norm(norm))
 
-        u = 1 - (arctan2( norm[2], norm[0]) / (2 * gp.pi) + 0.5)
-        v =  arccos(-norm[1]) / gp.pi
+        u = 1 - (arctan2( norm[2], norm[0]) / (2 * PI) + 0.5)
+        v =  arccos(-norm[1]) / PI
 
         uvs = [u, v]
 
@@ -88,19 +88,19 @@ class Sphere(object):
 class Plane(object):
     def __init__(self, position, normal, material):
         self.position = position
-        self.normal = normal / gp.linalg.norm(normal)
+        self.normal = op.divide(normal , op.norm(normal))
         self.material = material
 
     def ray_intersect(self, orig, dir):
         # t = (( position - origRayo) dot normal) / (dirRayo dot normal)
 
-        denom = gp.dot(dir, self.normal)
+        denom = op.dot(dir, self.normal)
 
         if abs(denom) > 0.0001:
-            t = gp.dot(self.normal, gp.subtract(self.position, orig)) / denom
+            t = op.dot(self.normal, op.subtract(self.position, orig)) / denom
             if t > 0:
                 # P = O + tD
-                hit = gp.add(orig, t * gp.array(dir))
+                hit = op.add(orig,op.mtxmul(t ,  dir))
 
                 return Intersect(distance = t,
                                  point = hit,
@@ -124,14 +124,14 @@ class AABB(object):
         halfSizeZ = size[2] / 2
 
 
-        self.planes.append( Plane( gp.add(position, (halfSizeX,0,0)), (1,0,0), material))
-        self.planes.append( Plane( gp.add(position, (-halfSizeX,0,0)), (-1,0,0), material))
+        self.planes.append( Plane( op.add(position, (halfSizeX,0,0)), (1,0,0), material))
+        self.planes.append( Plane( op.add(position, (-halfSizeX,0,0)), (-1,0,0), material))
 
-        self.planes.append( Plane( gp.add(position, (0,halfSizeY,0)), (0,1,0), material))
-        self.planes.append( Plane( gp.add(position, (0,-halfSizeY,0)), (0,-1,0), material))
+        self.planes.append( Plane( op.add(position, (0,halfSizeY,0)), (0,1,0), material))
+        self.planes.append( Plane( op.add(position, (0,-halfSizeY,0)), (0,-1,0), material))
 
-        self.planes.append( Plane( gp.add(position, (0,0,halfSizeZ)), (0,0,1), material))
-        self.planes.append( Plane( gp.add(position, (0,0,-halfSizeZ)), (0,0,-1), material))
+        self.planes.append( Plane( op.add(position, (0,0,halfSizeZ)), (0,0,1), material))
+        self.planes.append( Plane( op.add(position, (0,0,-halfSizeZ)), (0,0,-1), material))
 
 
     def ray_intersect(self, orig, dir):
